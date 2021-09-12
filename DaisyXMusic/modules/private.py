@@ -49,7 +49,7 @@ def _start(client, message):
     try:
      client.get_chat_member(m_channel, userr)
     except UserNotParticipant:
-     reply_me = await client.reply_text(f"**Hey {message.from_user.mention} You Should Join My Channel To Use Me!!**\n\n**⭕Link ~ @Itz_Alain**")
+     reply_me = client.reply_text(f"**Hey {message.from_user.mention} You Should Join My Channel To Use Me!!**\n\n**⭕Link ~ @Itz_Alain**")
      return
     client.send_message(
         message.chat.id,
