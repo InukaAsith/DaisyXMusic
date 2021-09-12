@@ -50,7 +50,7 @@ def song(client, message):
     for i in message.command[1:]:
         query += " " + str(i)
     print(query)
-    m = message.reply("🔎 Finding the song...")
+    m = message.reply("`🔎 Finding the song...`")
     ydl_opts = {"format": "bestaudio/best"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
@@ -67,7 +67,7 @@ def song(client, message):
         results[0]["views"]
 
     except Exception as e:
-        m.edit("❌ Found Nothing.\n\nTry another keywork or maybe spell it properly.")
+        m.edit("**❌ Found Nothing.\n\nTry another keywork or maybe spell it properly.**")
         print(str(e))
         return
     m.edit("Downloading the song ")
@@ -76,7 +76,7 @@ def song(client, message):
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = "**🎵 Uploaded by DaisyXMusic**"
+        rep = "🎵 𝙐𝙋𝙇𝙊𝘼𝘿𝙀𝘿 𝘽𝙔 𝙑𝙄𝙎𝙄𝙊𝙉 𝙈𝙐𝙎𝙄𝘾 𝘽𝙊𝙏"
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(dur_arr[i]) * secmul
@@ -91,7 +91,7 @@ def song(client, message):
         )
         m.delete()
     except Exception as e:
-        m.edit("❌ Error")
+        m.edit("**❌ Error**")
         print(e)
 
     try:
@@ -349,7 +349,7 @@ async def ytmusic(client, message: Message):
 
             if duration > DURATION_LIMIT:
                 await pablo.edit(
-                    f"❌ Videos longer than {DURATION_LIMIT} minute(s) aren't allowed, the provided video is {duration} minute(s)"
+                    f"**❌ Videos longer than {DURATION_LIMIT} minute(s) aren't allowed, the provided video is {duration} minute(s)**"
                 )
                 is_downloading = False
                 return
