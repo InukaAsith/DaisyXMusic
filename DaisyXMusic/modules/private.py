@@ -16,6 +16,17 @@
 
 import logging
 
+from pyrogram import filters
+from pyrogram.errors import RPCError
+from pyrogram.errors.exceptions.bad_request_400 import (
+    ChannelPrivate,
+    ChatAdminRequired,
+    PeerIdInvalid,
+    UsernameNotOccupied,
+    UserNotParticipant,
+)
+from pyrogram.types import ChatPermissions, InlineKeyboardButton, InlineKeyboardMarkup
+
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
@@ -33,6 +44,13 @@ logging.basicConfig(level=logging.INFO)
 
 @Client.on_message(filters.private & filters.incoming & filters.command(["start"]))
 def _start(client, message):
+    userr = message.from_user.id
+    m_channel = "@Itz_Alain"
+    try:
+     client.get_chat_member(m_channel, userr)
+    except UserNotParticipant:
+     reply_me = await client.reply_text(f"**Hey {message.from_user.mention} You Should Join My Channel To Use Me!!**\n\n**⭕Link ~ @Itz_Alain**")
+     return
     client.send_message(
         message.chat.id,
         text=tr.START_MSG.format(message.from_user.first_name, message.from_user.id),
@@ -53,7 +71,7 @@ def _start(client, message):
                         "💬 Support", url=f"https://t.me/{SUPPORT_GROUP}"
                     ),
                 ],
-                [InlineKeyboardButton("🛠 Source Code 🛠", url=f"https://{SOURCE_CODE}")],
+                
             ]
         ),
         reply_to_message_id=message.message_id,
